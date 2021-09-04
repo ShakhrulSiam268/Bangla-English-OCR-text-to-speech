@@ -18,12 +18,17 @@ engine.setProperty('voice', voices[1].id)   #changing index, changes voices. 1 f
 
 
 
-url='http://192.168.0.229:8080/shot.jpg'
+webcam=False
 
-imgResp = urllib.request.urlopen(url)
-imgNp = np.array(bytearray(imgResp.read()),dtype=np.uint8)
-img = cv2.imdecode(imgNp,-1)
-img = cv2.resize(img, None, fx=1, fy=1)
+if webcam:
+    url='http://192.168.0.229:8080/shot.jpg'
+    imgResp = urllib.request.urlopen(url)
+    imgNp = np.array(bytearray(imgResp.read()),dtype=np.uint8)
+    img = cv2.imdecode(imgNp,-1)
+    img = cv2.resize(img, None, fx=1, fy=1)
+else:
+    img=cv2.imread("bigsleep.jpg")
+    img = cv2.resize(img, None, fx=1, fy=1)
 
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 adaptive_threshold = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 85, 11)
